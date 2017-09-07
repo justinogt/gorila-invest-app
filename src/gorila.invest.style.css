@@ -1,0 +1,45 @@
+.gi-void0-bg {
+  background-color: #E1E2E1;
+}
+.gi-void1-bg {
+  background-color: #F5F5F6;
+}
+
+/* Background Colors */
+.gi-primary-bg {
+  background-color: #0f3757;
+}
+.gi-primary-bg-light {
+  background-color: #416184;
+}
+.gi-primary-bg-dark {
+  background-color: #00112e;
+}
+.gi-secondary-bg {
+  background-color: #76b729;
+}
+.gi-secondary-bg-light {
+  background-color: #a9ea5c;
+}
+.gi-secondary-bg-dark {
+  background-color: #438700;
+}
+
+/* Text Colors */
+.gi-primary-color {
+  color: rgba(255, 255, 255, 0.87);
+}
+.gi-secondary-color {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* DASHBOARD WIDGETS */
+.widget {
+  width: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #F5F5F6;
+  border-radius: 2px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: 15px;
+}

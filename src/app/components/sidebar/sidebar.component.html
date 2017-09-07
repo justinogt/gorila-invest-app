@@ -1,0 +1,15 @@
+<div class="nav-sidebar pb-3">
+  <div class="row">
+    <div class="brand p-3 m-1">
+      <img class="w-100" src="assets/logo-gorilainvest-pequena.png" alt="">
+    </div>
+  </div>
+
+  <div class="row list">
+    <nav class="mt-3">
+      <ul>
+        <li class="gi-primary-bg-light p-3" *ngFor="let link of links"><a class="gi-primary-color" href="{{ link.url }}">{{ link.name }}</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
