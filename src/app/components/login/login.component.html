@@ -5,15 +5,19 @@
 
   <hr />
 
+  <span class="error" *ngIf="error">{{ error }}</span>
+
   <div class="">
     <div class="social-btns">
       <p class="text-center">Conecte com</p>
       <div class="row">
         <div class="text-center col-sm">
-          <button class="w-100 btn btn-social-facebook" type="button" name="button">Facebook</button>
+          <button (click)="loginFacebook()" class="w-100 btn btn-social-facebook"
+            type="button" name="button">Facebook</button>
         </div>
         <div class="text-center col-sm">
-          <button class="w-100 btn btn-social-google" type="button" name="button" >Google</button>
+          <button (click)="loginGoogle()" class="w-100 btn btn-social-google"
+            type="button" name="button" >Google</button>
         </div>
       </div>
     </div>
@@ -24,7 +28,7 @@
       <hr class="w-25" />
     </div>
 
-    <form class="">
+    <form #formData="ngForm" (ngSubmit)="loginEmail(formData)">
       <div class="form-group">
         <label class="control-label" for="userEmail">Email:</label>
         <input class="form-control" type="text" name="userEmail">
@@ -34,7 +38,10 @@
         <input class="form-control" type="password" name="userPassword">
       </div>
 
-      <button class="w-100 btn gi-secondary-bg gi-secondary-color" type="submit" name="login">Login</button>
+      <button [disabled]="!formData.valid" class="w-100 btn gi-secondary-bg gi-secondary-color"
+        type="submit" name="login">Login</button>
+
+      <a routerLink="/signup" routerLinkActive="active">No account? <strong>Create account</strong></a>
     </form>
   </div>
 </div>

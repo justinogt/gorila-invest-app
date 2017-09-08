@@ -1,0 +1,8 @@
+<a routerLink="/login">Go back</a>
+
+<form #formData="ngForm" (ngSubmit)="onSubmit(formData)">
+  <input (ngModel)="email" type="text" name="email" value="">
+  <input (ngModel)="password" type="password" name="password" value="">
+
+  <button [disabled]="!formData.valid" class="btn btn-primary" type="submit" name="button">Create account</button>
+</form>
