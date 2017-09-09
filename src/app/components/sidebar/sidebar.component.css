@@ -1,11 +1,16 @@
-:host {
-  z-index: 100;
-  box-shadow: 0 0 10px black;
-}
-
 .nav-sidebar .brand {
   width: 100%;
-  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.brand .welcome img {
+  width: 64px;
+  height: 64px;
+}
+.brand .welcome h1 {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .list nav {
@@ -17,5 +22,13 @@
   }
   .list ul li {
     font-weight: bold;
-    border-bottom: 1px solid #0f3757;
   }
+
+.list li a {
+  display: block;
+}
+.list li a.active {
+  transition: all 0.4s;
+  border-left: 4px solid #a9ea5c;
+  background: #293846;
+}

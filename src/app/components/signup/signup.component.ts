@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
     if (formData.valid) {
       let userData = formData.value;
       this.afAuth.auth.createUserWithEmailAndPassword(userData.email, userData.password)
-        .then((success) => this.router.navigate(['/dashboard']))
+        .then((success) => this.router.navigate(['/member-area']))
         .catch((error) => this.error = error);
     }
   }

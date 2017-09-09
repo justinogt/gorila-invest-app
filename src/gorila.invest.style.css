@@ -1,3 +1,6 @@
+.gi-white {
+
+}
 .gi-void0-bg {
   background-color: #E1E2E1;
 }
@@ -31,6 +34,42 @@
 }
 .gi-secondary-color {
   color: rgba(0, 0, 0, 0.87);
+}
+
+.z-index-1k {
+  z-index: 1000;
+}
+
+.card-shadow-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.card-shadow-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.card-shadow-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.card-shadow-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.card-shadow-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.shadow-h-1 {
+  box-shadow: 1px 0 3px rgba(0,0,0,0.12), 1px 0 2px rgba(0,0,0,0.24);
+}
+.shadow-h-2 {
+  box-shadow: 3px 0 6px rgba(0,0,0,0.16), 3px 0 6px rgba(0,0,0,0.23);
+}
+.shadow-h-3 {
+  box-shadow: 10px 0 20px rgba(0,0,0,0.19), 6px 0 6px rgba(0,0,0,0.23);
+}
+.shadow-h-4 {
+  box-shadow: 14px 0 28px rgba(0,0,0,0.25), 10px 0 10px rgba(0,0,0,0.22);
+}
+.shadow-h-5 {
+  box-shadow: 19px 0 38px rgba(0,0,0,0.30), 15px 0 12px rgba(0,0,0,0.22);
 }
 
 /* DASHBOARD WIDGETS */
