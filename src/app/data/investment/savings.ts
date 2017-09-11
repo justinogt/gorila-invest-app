@@ -3,7 +3,8 @@ import { IInvestment } from '../../interfaces/iinvestment';
 
 export class Savings implements IInvestment {
   $key: string;
-  type: InvestmentType; 
+  name: string;
+  type: InvestmentType;
   bank: string;
   investmentDate: string;
   value: number;

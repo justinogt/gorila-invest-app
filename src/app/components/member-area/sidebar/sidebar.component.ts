@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { UserService } from '../../../services/user.service';
 import { SidebarLink } from '../../../data/sidebar-link';
@@ -9,7 +9,7 @@ import { SidebarLink } from '../../../data/sidebar-link';
   styleUrls: ['./sidebar.component.css']
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   displayName: string;
   photoUrl: string;
 
@@ -18,18 +18,14 @@ export class SidebarComponent implements OnInit {
     new SidebarLink("Investimentos", "/member-area/investimentos")
   ];
 
+  private _subUser: any;
+
   constructor(private userService: UserService) {
-
-  }
-
-  ngOnInit() {
-    this.userService.getUser().then(user => {
+    this._subUser = userService.afUser.subscribe(user => {
       this.displayName = user.displayName;
-      this.photoUrl = user.photoURL;
+      this.photoUrl = user.photoUrl;
     });
-  }
 
-  logout() {
-    this.userService.logout();
+    userService.onUserLogoutEvent.push(() => this._subUser.unsubscribe());
   }
 }

@@ -5,49 +5,49 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import { AngularFireAuth } from 'angularfire2/auth';
 import 'rxjs/add/operator/take';
 
+import { User } from '../data/user';
+
 @Injectable()
 export class UserService {
 
-  private LOGIN_PAGE: string = '/login';
-  private MEMBER_AREA: string = '/member-area';
+  private _LOGIN_PAGE: string = '/login';
+  private _MEMBER_AREA: string = '/member-area';
 
-  user: FirebaseObjectObservable<any>;
+  afUser: FirebaseObjectObservable<any> = null;
+  onUserLogoutEvent: any[] = [];
 
-  constructor(private afAuth: AngularFireAuth,
+  private _wasUserLogged: boolean = false;
+
+  constructor(public afAuth: AngularFireAuth,
     private dbFire: AngularFireDatabase,
     private router: Router) {
-    if (afAuth.auth.currentUser) {
-      this.user = dbFire.object('users/' + afAuth.auth.currentUser.uid);
-    }
-    else {
-      afAuth.authState.subscribe(auth => {
-        if (auth) {
-          this.user = dbFire.object('users/' + auth.uid);
-          if (!this.user.hasOwnProperty('email'))
-            this.setUser(auth.uid, auth.displayName, auth.email, auth.photoURL);
+    if (afAuth.auth.currentUser)
+      this.afUser = dbFire.object('users/' + afAuth.auth.currentUser.uid);
 
-          router.navigateByUrl(this.MEMBER_AREA);
-        }
-      });
-    }
-  }
+    afAuth.authState.subscribe(auth => {
+      if (auth) {
+        this._wasUserLogged = true;
+        if (!this.afUser) this.afUser = dbFire.object('users/' + auth.uid);
 
-  getUser(): any {
-    return new Promise<any>(
-      (resolve, reject) => {
-        this.user.take(1).subscribe(user => {
-          resolve(user);
-        });
+        router.navigateByUrl(this._MEMBER_AREA);
       }
-    );
+    });
   }
 
   loginFacebook() {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then(auth => {
+        var user = auth.user;
+        this.setUser(user.uid, new User(user.displayName, user.email, user.photoURL));
+      });
   }
 
   loginGoogle() {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(auth => {
+        var user = auth.user;
+        this.setUser(user.uid, new User(user.displayName, user.email, user.photoURL));
+      });
   }
 
   loginEmail(formData) {
@@ -58,8 +58,17 @@ export class UserService {
   }
 
   logout() {
+    if (this._wasUserLogged) {
+      for (let i = 0; i < this.onUserLogoutEvent.length; i++) {
+        if (this.onUserLogoutEvent[i])
+          this.onUserLogoutEvent[i]();
+      }
+      this.onUserLogoutEvent = [];
+    }
+    this._wasUserLogged = false;
+
     this.afAuth.auth.signOut();
-    this.router.navigateByUrl(this.LOGIN_PAGE);
+    this.router.navigateByUrl(this._LOGIN_PAGE);
   }
 
   signup(formData) {
@@ -69,12 +78,9 @@ export class UserService {
       return new Promise<any>(
         (resolve, reject) => {
           this.afAuth.auth.createUserWithEmailAndPassword(userData.email, userData.password)
-            .then((success) => {
-              this.setUser(this.afAuth.auth.currentUser.uid,
-                userData.displayName,
-                userData.email,
-                '');
-              resolve(success);
+            .then(user => {
+              this.setUser(user.uid, new User(userData.displayName, userData.email, ""));
+              resolve(user);
             })
             .catch((error) => {
               reject(error);
@@ -84,12 +90,10 @@ export class UserService {
     }
   }
 
-  private setUser(uid: string, displayName: string, email: string, photoUrl: string) {
-    this.user = this.dbFire.object('users/' + uid);
-    this.user.set({
-      displayName: displayName,
-      email: email,
-      photoURL: photoUrl
-    });
+  private setUser(uid: string, user: User) {
+    this.afUser = this.dbFire.object('users/' + uid);
+    if (!this.afUser.hasOwnProperty('email')) {
+      this.afUser.set(user);
+    }
   }
 }

@@ -3,15 +3,14 @@ import { Savings } from './savings';
 
 
 export class PrivateTitle extends Savings {
-  titleName: string;
   investmentReturn: number;
 
-  constructor(bank: string, titleName: string, value: number,
+  constructor(bank: string, name: string, value: number,
     investmentReturn: number, investmentDate: string = "") {
     super(bank, value, investmentDate);
 
     this.type = InvestmentType.PrivateTitle;
-    this.titleName = titleName;
+    this.name = name;
     this.investmentReturn = investmentReturn;
   }
 }

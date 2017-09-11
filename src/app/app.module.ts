@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { routes } from './app.routes';
 
 // Services
-import { WidgetsService } from './services/widgets.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { InvestmentsService } from './services/investments.service';
 import { UserService } from './services/user.service';
@@ -24,10 +23,11 @@ import { DashboardHeaderComponent } from './components/member-area/Dashboard/das
 import { InvestmentsComponent } from './components/member-area/investment/investments/investments.component';
 import { DetailInvestmentComponent } from './components/member-area/Investment/detail-investment/detail-investment.component';
 import { SidebarComponent } from './components/member-area/sidebar/sidebar.component';
-import { SimpleWidgetComponent } from './components/member-area/dashboard/widgets/simple-widget/simple-widget.component';
 import { AddInvestmentComponent } from './components/member-area/investment/add-investment/add-investment.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { MemberAreaComponent } from './components/member-area/member-area/member-area.component';
+import { ModalAddInvestmentComponent } from './components/member-area/modals/modal-add-investment/modal-add-investment.component';
+import { PatrimonyWidgetComponent } from './components/member-area/dashboard/widgets/patrimony-widget/patrimony-widget.component';
 
 export const firebaseConfig = {
    apiKey: "AIzaSyBIfhHy1faBpRknRJWq-DsE0pYVTZE8sy4",
@@ -47,26 +47,29 @@ export const firebaseConfig = {
     InvestmentsComponent,
     DetailInvestmentComponent,
     SidebarComponent,
-    SimpleWidgetComponent,
     WidgetHostDirective,
     AddInvestmentComponent,
     SignupComponent,
     MemberAreaComponent,
+    ModalAddInvestmentComponent,
+    PatrimonyWidgetComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    routes
+    routes,
+    ModalModule.forRoot()
   ],
   providers: [
     AngularFireDatabase,
     AuthGuardService,
     InvestmentsService,
-    WidgetsService,
-    UserService
+    UserService,
+    BsModalService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  entryComponents: [ ModalAddInvestmentComponent ]
 })
 export class AppModule { }
