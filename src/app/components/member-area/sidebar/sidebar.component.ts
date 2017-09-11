@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
 
-import { SidebarLink } from '../../data/sidebar-link';
+import { UserService } from '../../../services/user.service';
+import { SidebarLink } from '../../../data/sidebar-link';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,16 +18,18 @@ export class SidebarComponent implements OnInit {
     new SidebarLink("Investimentos", "/member-area/investimentos")
   ];
 
-  constructor(private afAuth: AngularFireAuth, private router: Router ) {
-    this.displayName = afAuth.auth.currentUser.displayName;
-    this.photoUrl = afAuth.auth.currentUser.photoURL;
+  constructor(private userService: UserService) {
+
   }
 
   ngOnInit() {
+    this.userService.getUser().then(user => {
+      this.displayName = user.displayName;
+      this.photoUrl = user.photoURL;
+    });
   }
 
   logout() {
-    this.afAuth.auth.signOut();
-    this.router.navigateByUrl('/login');
+    this.userService.logout();
   }
 }

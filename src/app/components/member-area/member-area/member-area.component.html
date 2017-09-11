@@ -1,0 +1,29 @@
+<div class="row h-100">
+  <nav class="col-xl-2 col-sm-3 gi-primary-bg-dark z-index-1k shadow-h-2">
+    <app-sidebar></app-sidebar>
+  </nav>
+
+  <main class="col-xl-10 col-sm-9 gi-void1-bg">
+    <div class="top-nav row mb-2 p-3 gi-void0-bg">
+      <div class="col-sm-4 col-xl-2">
+        <a routerLink="/member-area/dashboard"><img class="w-100" src="assets/logo-gorilainvest-pequena.png" alt=""></a>
+      </div>
+      <div class="offset-sm-4 col-sm-4 offset-xl-8 col-xl-2">
+        <div>
+          <a (click)='logout()'><i class="fa fa-sign-out"></i> Log out</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <app-dashboard-header></app-dashboard-header>
+      </div>
+
+      <div class="col-sm-12">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</div>
+
+<app-add-investment></app-add-investment>

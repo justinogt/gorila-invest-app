@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { WidgetItem } from '../data/widget-item';
 
 // Widgets
-import { SimpleWidgetComponent } from '../components/dashboard/widgets/simple-widget/simple-widget.component';
+import { SimpleWidgetComponent } from '../components/member-area/dashboard/widgets/simple-widget/simple-widget.component';
 
 @Injectable()
 export class WidgetsService {

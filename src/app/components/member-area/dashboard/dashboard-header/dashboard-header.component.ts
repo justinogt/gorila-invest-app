@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WidgetsService } from '../../../services/widgets.service';
+import { WidgetsService } from '../../../../services/widgets.service';
 
 @Component({
   selector: 'app-dashboard-header',

@@ -1,0 +1,24 @@
+<div class="sidebar pb-3">
+  <div class="row">
+    <div class="brand p-3 m-1 gi-void1-bg rounded">
+      <h3 class="text-center">Bem vindo!</h3>
+
+      <hr class="w-75">
+
+      <div class="welcome mb-3 text-center">
+        <img class="rounded-circle" src="{{ photoUrl }}" alt="">
+        <h1 class="ml-3">{{ displayName }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row list">
+    <ul>
+      <li class="gi-primary-bg-light" *ngFor="let link of links">
+        <a class="gi-primary-color p-2 pl-4" routerLink="{{ link.url }}" routerLinkActive="active">
+          {{ link.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

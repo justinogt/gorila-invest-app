@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { WidgetComponent } from '../../../../data/widget-component';
+import { WidgetComponent } from '../../../../../data/widget-component';
 
 @Component({
   selector: 'app-simple-widget',

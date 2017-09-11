@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
+
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,17 +12,14 @@ export class SignupComponent implements OnInit {
 
   error: any;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router) {}
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit() {
   }
 
   onSubmit(formData) {
-    if (formData.valid) {
-      let userData = formData.value;
-      this.afAuth.auth.createUserWithEmailAndPassword(userData.email, userData.password)
-        .then((success) => this.router.navigate(['/member-area']))
-        .catch((error) => this.error = error);
-    }
+    this.userService.signup(formData)
+      .then((success) => this.router.navigate(['/member-area']))
+      .catch((error) => this.error = error);
   }
 }

@@ -4,9 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { MemberAreaComponent } from './components/member-area/member-area.component';
-import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
-import { InvestmentsComponent } from './components/investment/investments/investments.component';
+import { MemberAreaComponent } from './components/member-area/member-area/member-area.component';
+import { DashboardComponent } from './components/member-area/dashboard/dashboard/dashboard.component';
+import { InvestmentsComponent } from './components/member-area/investment/investments/investments.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
 

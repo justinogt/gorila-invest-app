@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/Forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
+
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,28 +14,23 @@ export class LoginComponent implements OnInit {
 
   error: any;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router) {
-    this.afAuth.authState.subscribe(auth => {
-      if (auth) this.router.navigateByUrl('/member-area');
-    });
+  constructor(private router: Router,
+    private userService: UserService) {
   }
 
   ngOnInit() {
   }
 
   loginFacebook() {
-    this.login(this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()));
+    this.login(this.userService.loginFacebook());
   }
 
   loginGoogle() {
-    this.login(this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+    this.login(this.userService.loginGoogle());
   }
 
   loginEmail(formData) {
-    if (formData.valid) {
-      let userData = formData.value;
-      this.login(this.afAuth.auth.signInWithEmailAndPassword(userData.email, userData.password));
-    }
+    this.login(this.userService.loginEmail(formData));
   }
 
   private login(promise: firebase.Promise<any>) {
