@@ -6,5 +6,6 @@ export interface IInvestment {
   type: InvestmentType; // Type: Savings, PrivateTitle, PublicTitle, ...
   bank: string;
   investmentDate: string;
+  investmentReturn: number;
   value: number;
 }

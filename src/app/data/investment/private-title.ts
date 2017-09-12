@@ -3,8 +3,7 @@ import { Savings } from './savings';
 
 
 export class PrivateTitle extends Savings {
-  investmentReturn: number;
-
+  
   constructor(bank: string, name: string, value: number,
     investmentReturn: number, investmentDate: string = "") {
     super(bank, value, investmentDate);

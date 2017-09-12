@@ -14,7 +14,7 @@
         <tr *ngIf="!hasAnyInvestment()">
           <th class="text-center" colspan="5">{{tableMessage}}</th>
         </tr>
-        <tr *ngFor="let investment of investments">
+        <tr *ngFor="let investment of investments" (click)="openInvestment(investment)">
           <th scope="row">{{investment.investmentDate}}</th>
           <td>{{investment.bank}}</td>
           <td>{{investment.name}}</td>

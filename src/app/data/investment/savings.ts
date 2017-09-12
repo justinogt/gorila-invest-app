@@ -8,6 +8,7 @@ export class Savings implements IInvestment {
   bank: string;
   investmentDate: string;
   value: number;
+  investmentReturn: number;
 
   constructor(bank: string, value: number, investmentDate: string = null) {
     if (investmentDate)
@@ -18,5 +19,6 @@ export class Savings implements IInvestment {
     this.type = InvestmentType.Savings;
     this.bank = bank;
     this.value = value;
+    this.investmentReturn = 8.3;
   }
 }

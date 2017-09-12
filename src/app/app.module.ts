@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { routes } from './app.routes';
+import { ChartsModule } from 'ng2-charts';
 
 // Services
 import { AuthGuardService } from './services/auth-guard.service';
@@ -28,6 +30,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { MemberAreaComponent } from './components/member-area/member-area/member-area.component';
 import { ModalAddInvestmentComponent } from './components/member-area/modals/modal-add-investment/modal-add-investment.component';
 import { PatrimonyWidgetComponent } from './components/member-area/dashboard/widgets/patrimony-widget/patrimony-widget.component';
+import { PatrimonyDistributionWidgetComponent } from './components/member-area/dashboard/widgets/patrimony-distribution-widget/patrimony-distribution-widget.component';
 
 export const firebaseConfig = {
    apiKey: "AIzaSyBIfhHy1faBpRknRJWq-DsE0pYVTZE8sy4",
@@ -53,14 +56,17 @@ export const firebaseConfig = {
     MemberAreaComponent,
     ModalAddInvestmentComponent,
     PatrimonyWidgetComponent,
+    PatrimonyDistributionWidgetComponent
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     routes,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ChartsModule
   ],
   providers: [
     AngularFireDatabase,

@@ -7,11 +7,11 @@ import { SignupComponent } from './components/signup/signup.component';
 import { MemberAreaComponent } from './components/member-area/member-area/member-area.component';
 import { DashboardComponent } from './components/member-area/dashboard/dashboard/dashboard.component';
 import { InvestmentsComponent } from './components/member-area/investment/investments/investments.component';
+import { DetailInvestmentComponent } from './components/member-area/Investment/detail-investment/detail-investment.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
 
 export const router: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   {
@@ -19,12 +19,14 @@ export const router: Routes = [
     component: MemberAreaComponent,
     canActivate: [ AuthGuardService ],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'investimentos/detail/:id', component: DetailInvestmentComponent },
       { path: 'investimentos', component: InvestmentsComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '**', redirectTo: 'dashboard' }
     ]
   },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
 

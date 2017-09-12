@@ -10,13 +10,12 @@ import 'rxjs/add/operator/take';
 export class AuthGuardService implements CanActivate {
 
   constructor(private afAuth: AngularFireAuth, private router: Router) { }
-
-  canActivate(): Observable<boolean> {
-    return this.afAuth.authState
-      .take(1)
-      .map(authState => !!authState)
-      .do(auth => {
-        if (!auth) this.router.navigate(['/login']);
-      });
+    canActivate(): Observable<boolean> {
+      return this.afAuth.authState
+        .take(1)
+        .map(authState => !!authState)
+        .do(auth => {
+          if (!auth) this.router.navigate(['/login']);
+        });
   }
 }

@@ -29,9 +29,13 @@ export class UserService {
         this._wasUserLogged = true;
         if (!this.afUser) this.afUser = dbFire.object('users/' + auth.uid);
 
-        router.navigateByUrl(this._MEMBER_AREA);
+        //router.navigateByUrl(this._MEMBER_AREA);
       }
     });
+  }
+
+  getUserId(): string {
+    return this.afAuth.auth.currentUser.uid;
   }
 
   loginFacebook() {

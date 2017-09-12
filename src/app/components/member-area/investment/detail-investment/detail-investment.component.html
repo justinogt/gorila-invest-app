@@ -1,3 +1,25 @@
-<p>
-  detail-investment works!
-</p>
+<div class="container">
+  <div class="row" *ngIf="investment">
+    <div class="col-3">
+      <div class="">
+        <p><strong>Data Investimento: </strong> {{investment.investmentDate}}</p>
+        <p><strong>Banco: </strong> {{investment.bank}}</p>
+        <p><strong>Nome: </strong> {{investment.name}}</p>
+        <p><strong>Valor: </strong> {{investment.value}}</p>
+      </div>
+    </div>
+    <div class="col-9">
+      <div *ngIf="isChartLoaded" style="display: block;">
+        <canvas baseChart width="1024" height="500"
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [colors]="chartColors"
+          [legend]="chartLegend"
+          [chartType]="chartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

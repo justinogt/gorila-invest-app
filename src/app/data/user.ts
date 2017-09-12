@@ -1,4 +1,5 @@
 export class User {
+  $key: string;
   displayName: string;
   email: string;
   photoUrl: string;

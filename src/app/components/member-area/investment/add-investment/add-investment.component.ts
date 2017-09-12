@@ -20,7 +20,7 @@ export class AddInvestmentComponent implements OnInit {
 
   openPrivateTitle() {
     this.bsModalRef = this.modalService.show(ModalAddInvestmentComponent);
-    this.bsModalRef.content.title = "Adicione um Titulo Privado";
+    this.bsModalRef.content.title = "Adicione um Título Privado";
     this.bsModalRef.content.type = InvestmentType.PrivateTitle;
     this.bsModalRef.content.list = [InvestmentType.PrivateTitle];
   }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { InvestmentType } from '../../../../enums/investment-type.enum';
 import { IInvestment } from '../../../../interfaces/iinvestment';
@@ -12,14 +13,15 @@ import { InvestmentsService } from '../../../../services/investments.service';
   templateUrl: './investments.component.html',
   styleUrls: ['./investments.component.css']
 })
-export class InvestmentsComponent implements OnDestroy {
+export class InvestmentsComponent {
 
   tableMessage: string = "Carregando..."
   investments: IInvestment[] = [];
 
   private _subPrivateTitles: any;
 
-  constructor(private investmentsService: InvestmentsService) {
+  constructor(private investmentsService: InvestmentsService,
+    private router: Router) {
     investmentsService.initialize()
       .then(() => {
         this._subPrivateTitles = this.investmentsService.afPrivateTitles
@@ -36,11 +38,12 @@ export class InvestmentsComponent implements OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-  }
-
   hasAnyInvestment(): boolean {
     if (!this.investments) return false;
     return this.investments.length != 0;
+  }
+
+  openInvestment(investment: IInvestment) {
+    this.router.navigate(["/member-area/investimentos/detail", investment.$key]);
   }
 }

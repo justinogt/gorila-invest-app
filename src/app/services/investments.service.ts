@@ -54,25 +54,29 @@ export class InvestmentsService {
     );
   }
 
-  getInvestmentObservable(type: InvestmentType): FirebaseListObservable<any> {
+  getInvestment(type: InvestmentType, id): FirebaseObjectObservable<any> {
+    return this.dbFire.object(`investments/${this.userService.getUserId()}/${this.getInvestmentTypeName(type)}/${id}`);
+  }
+
+  add(type: InvestmentType, investment: IInvestment) {
+    this.addToAccount(investment.value);
+    return this.getInvestmentsObservable(type).push(investment);
+  }
+  update(type: InvestmentType, investment: any) {
+    return this.getInvestmentsObservable(type).update(investment.$key, investment);
+  }
+  remove(type: InvestmentType, investment: any) {
+    this.addToAccount(-investment.value);
+    return this.getInvestmentsObservable(type).remove(investment.$key);
+  }
+
+  private getInvestmentsObservable(type: InvestmentType): FirebaseListObservable<any> {
     switch (type) {
       case InvestmentType.Savings:
         return this.afSavings;
       case InvestmentType.PrivateTitle:
         return this.afPrivateTitles;
     }
-  }
-
-  add(type: InvestmentType, investment: IInvestment) {
-    this.addToAccount(investment.value);
-    return this.getInvestmentObservable(type).push(investment);
-  }
-  update(type: InvestmentType, investment: any) {
-    return this.getInvestmentObservable(type).update(investment.$key, investment);
-  }
-  remove(type: InvestmentType, investment: any) {
-    this.addToAccount(-investment.value);
-    return this.getInvestmentObservable(type).remove(investment.$key);
   }
 
   private getInvestmentTypeName(type: InvestmentType): string {
