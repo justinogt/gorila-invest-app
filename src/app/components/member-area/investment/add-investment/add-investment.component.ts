@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
@@ -10,13 +10,10 @@ import { ModalAddInvestmentComponent } from '../../modals/modal-add-investment/m
   templateUrl: './add-investment.component.html',
   styleUrls: ['./add-investment.component.css']
 })
-export class AddInvestmentComponent implements OnInit {
+export class AddInvestmentComponent {
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
-
-  ngOnInit() {
-  }
 
   openPrivateTitle() {
     this.bsModalRef = this.modalService.show(ModalAddInvestmentComponent);

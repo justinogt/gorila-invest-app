@@ -1,5 +1,12 @@
 #add-new-investment {
   position: fixed;
+  width: 60px;
+  height: 60px;
   bottom: 45px;
   right: 45px;
 }
+
+  #add-new-investment i.fa {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.87);
+  }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { InvestmentsService } from '../../../../../services/investments.service';
 
@@ -7,21 +7,12 @@ import { InvestmentsService } from '../../../../../services/investments.service'
   templateUrl: './patrimony-widget.component.html',
   styleUrls: ['./patrimony-widget.component.css']
 })
-export class PatrimonyWidgetComponent implements OnDestroy {
+export class PatrimonyWidgetComponent {
 
   patrimony: number = 0;
 
-  private _subAccount: any;
-
   constructor(private investmentsService: InvestmentsService) {
-    investmentsService.initialize()
-      .then(() => {
-        this._subAccount = investmentsService.afAccount
-          .subscribe((acc) => this.patrimony = acc.patrimony || 0);
-      });
-  }
-
-  ngOnDestroy() {
-    this._subAccount.unsubscribe();
+    investmentsService.initialize();
+    investmentsService.patrimony.subscribe(patrimony => this.patrimony = patrimony);
   }
 }

@@ -1,25 +1,43 @@
-<div class="container">
-  <div class="row" *ngIf="investment">
-    <div class="col-3">
-      <div class="">
-        <p><strong>Data Investimento: </strong> {{investment.investmentDate}}</p>
-        <p><strong>Banco: </strong> {{investment.bank}}</p>
-        <p><strong>Nome: </strong> {{investment.name}}</p>
-        <p><strong>Valor: </strong> {{investment.value}}</p>
-      </div>
+<div class="p-4 col-12" *ngIf="investment">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="hidden-md-down">Data</th>
+        <th class="hidden-sm-down">Banco</th>
+        <th>Nome</th>
+        <th class="hidden-sm-down">Tipo</th>
+        <th class="hidden-xs-down">Retorno</th>
+        <th>Valor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="hidden-md-down" scope="row">{{getInvestmentDate(investment.investmentDate)}}</th>
+        <td class="hidden-sm-down">{{investment.bank}}</td>
+        <td>{{investment.name}}</td>
+        <td class="hidden-sm-down">{{getInvestmentTypeName(investment.type)}}</td>
+        <td class="hidden-xs-down">{{investment.investmentReturn}}%</td>
+        <td>R$ {{investment.value}}</td>
+        <td><button (click)="removeInvestment(investment)" class="btn btn-primary" type="button" name="button"><i class="fa fa-trash"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="w-50">
+  <main>
+    <div class="text-center" *ngIf="!isChartLoaded">
+      <h5>Carregando...</h5>
     </div>
-    <div class="col-9">
-      <div *ngIf="isChartLoaded" style="display: block;">
-        <canvas baseChart width="1024" height="500"
-          [datasets]="chartData"
-          [labels]="chartLabels"
-          [options]="chartOptions"
-          [colors]="chartColors"
-          [legend]="chartLegend"
-          [chartType]="chartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
-      </div>
+    <div class="text-center" *ngIf="isChartLoaded" style="display: block;">
+      <button (click)="toggleChartDetail()" class="btn btn-primary mb-2" type="button" name="button">{{chartButtonMessage}}</button>
+      <canvas baseChart height="220"
+        [datasets]="chartData"
+        [labels]="chartLabels"
+        [options]="chartOptions"
+        [colors]="chartColors"
+        [legend]="chartLegend"
+        [chartType]="chartType"></canvas>
     </div>
-  </div>
+  </main>
 </div>

@@ -1,61 +1,62 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { InvestmentsService } from '../../../../../services/investments.service';
 import { InvestmentType } from '../../../../../enums/investment-type.enum';
+import { IInvestment } from '../../../../../interfaces/iinvestment';
 
 @Component({
   selector: 'app-patrimony-distribution-widget',
   templateUrl: './patrimony-distribution-widget.component.html',
   styleUrls: ['./patrimony-distribution-widget.component.css']
 })
-export class PatrimonyDistributionWidgetComponent implements OnInit {
+export class PatrimonyDistributionWidgetComponent {
   @ViewChild( BaseChartDirective ) chart: BaseChartDirective;
 
-  chartLabels: Array<string> = ['Poupança', 'Títulos Privados'];
-  chartData: Array<number> = [0, 0];
+  chartLabels: Array<string> = ['Títulos Privados'];
+  chartData: Array<number> = [0];
+  chartColor: Array <any> = [{
+     backgroundColor: ['rgba(118,183,41,0.5)'],
+  }];
   chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
     legend: {
       position: 'right'
     }
   };
   chartType:string = 'pie';
 
-  isChartLoaded: boolean = false;
-  private _amountDataToLoad: number = 2;
+  private _patrimonyDistribution: number[] = [0];
 
-  constructor(private investmentService: InvestmentsService) {
-    investmentService.afSavings.map(res => res).subscribe(savings => {
-      var temp = this.chartData;
-      temp[0] = savings.length;
-      this.chartData = temp;
+  constructor(private investmentsService: InvestmentsService) {
+    investmentsService.initialize();
 
-      console.log(this.chartData);
-      this.chartLoaded();
-    });
-    investmentService.afPrivateTitles.map(res => res).subscribe(privateTitles => {
-      var temp = this.chartData;
-      temp[1] = privateTitles.length;
-      this.chartData = temp;
-
-      console.log(this.chartData);
-      this.chartLoaded();
+    investmentsService.privateTitles.subscribe(privateTitles => {
+      this._patrimonyDistribution[0] = this.calculatePatrimony(privateTitles);
+      this.calculatePatrimonyPercentage();
     });
   }
 
-  ngOnInit() {
+  private calculatePatrimony(investments: IInvestment[]): number {
+    var sum = 0;
+    for (let i = 0; i < investments.length; i++)
+      sum += investments[i].value;
+    return sum;
   }
 
-  private chartLoaded() {
+  private calculatePatrimonyPercentage() {
+    var sum = 0;
+    for (let i = 0; i < this._patrimonyDistribution.length; i++)
+      sum += this._patrimonyDistribution[i];
 
-      // Transform data to %
-      var sum: number = 0;
-      for (let i = 0; i < this.chartData.length; i++)
-        sum += this.chartData[i];
+    for (let i = 0; i < this._patrimonyDistribution.length; i++)
+      this.chartData[i] = Number((this._patrimonyDistribution[i] / sum * 100).toFixed(2));
 
-      for (let i = 0; i < this.chartData.length; i++)
-        this.chartData[i] = Number((this.chartData[i] / sum * 100).toFixed(2));
-
-      this.chart.ngOnChanges({});
+    setTimeout(() => {
+      if (this.chart && this.chart.chart)
+        this.chart.chart.update();
+    }, 250);
+    ;
   }
 }

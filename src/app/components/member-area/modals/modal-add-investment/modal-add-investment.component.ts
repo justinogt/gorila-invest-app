@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { InvestmentType } from '../../../../enums/investment-type.enum';
 import { IInvestment } from '../../../../interfaces/iinvestment';
@@ -22,7 +24,8 @@ export class ModalAddInvestmentComponent implements OnInit {
 
   investment: IInvestment;
 
-  constructor(private bsModalRef: BsModalRef, private investmentsService: InvestmentsService) { }
+  constructor(public bsModalRef: BsModalRef, private investmentsService: InvestmentsService,
+    private toastr: ToastsManager, private router: Router) { }
 
   ngOnInit() {
     this.createNewInvestment(InvestmentType.Savings);
@@ -34,9 +37,17 @@ export class ModalAddInvestmentComponent implements OnInit {
   }
 
   addInvestment() {
-    this.investmentsService.add(this.type, this.investment)
-      .then(() => {
+    this.investmentsService.add(this.investment)
+      .then((newInvestment) => {
         this.bsModalRef.hide();
+
+        this.toastr.onClickToast()
+          .subscribe(toast => {
+            var data = toast.data as any;
+            if (data)
+              this.router.navigate(["/member-area/investimentos/detail", data.key]);
+          });
+        this.toastr.success(`Investimento (${this.investment.name}) inserido com sucesso!`, '', { data: { key: newInvestment.key }});
       });
   }
 

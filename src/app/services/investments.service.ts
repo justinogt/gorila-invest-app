@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import 'rxjs/add/operator/take';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { UserService } from './user.service';
 import { InvestmentType } from '../enums/investment-type.enum';
 import { IInvestment } from '../interfaces/iinvestment';
 import { PrivateTitle } from '../data/investment/private-title';
-import { Account } from '../data/account';
+import { Savings } from '../data/investment/savings';
 
 @Injectable()
 export class InvestmentsService {
-  afAccount: FirebaseObjectObservable<any> = null;
-  afSavings: FirebaseListObservable<any> = null;
-  afPrivateTitles: FirebaseListObservable<any> = null;
+  patrimony: BehaviorSubject<number> = new BehaviorSubject(0);
+  savings: BehaviorSubject<Savings[]> = new BehaviorSubject([]);
+  privateTitles: BehaviorSubject<PrivateTitle[]> = new BehaviorSubject([]);
 
-  private _account: Account;
-  private _subAccount: any;
-  private _subUser: any;
+  private _afSavings: FirebaseListObservable<any> = null;
+  private _afPrivateTitles: FirebaseListObservable<any> = null;
+  private _subSavings: any;
+  private _subPrivateTitles: any;
   private _isInitialized: boolean = false;
 
   constructor(public userService: UserService,
-    private dbFire: AngularFireDatabase) {
-  }
+    private dbFire: AngularFireDatabase) { }
 
   initialize() {
     return new Promise<void>(
@@ -32,20 +32,22 @@ export class InvestmentsService {
         }
 
         let userId = this.userService.afAuth.auth.currentUser.uid;
-        this.afAccount = this.dbFire.object(`investments/${userId}/account`);
-        this.afSavings = this.dbFire.list(`investments/${userId}/${this.getInvestmentTypeName(InvestmentType.Savings)}`);
-        this.afPrivateTitles = this.dbFire.list(`investments/${userId}/${this.getInvestmentTypeName(InvestmentType.PrivateTitle)}`);
+        this._afSavings = this.dbFire.list(`investments/${userId}/${this.getInvestmentTypeName(InvestmentType.Savings)}`);
+        this._afPrivateTitles = this.dbFire.list(`investments/${userId}/${this.getInvestmentTypeName(InvestmentType.PrivateTitle)}`);
 
-        this._subAccount = this.afAccount.subscribe((acc) => {
-          if (acc.$exists())
-            this._account = acc;
-          else
-            this._account = new Account(0);
+        this._subSavings = this._afSavings.subscribe(savings => {
+          this.savings.next(savings);
+          this.patrimony.next(this.getPatrimony());
+        });
+        this._subPrivateTitles = this._afPrivateTitles.subscribe(privateTitles => {
+          this.privateTitles.next(privateTitles);
+          this.patrimony.next(this.getPatrimony());
         });
 
         this.userService.onUserLogoutEvent.push(() => {
           this._isInitialized = false;
-          this._subAccount.unsubscribe();
+          this._subSavings.unsubscribe();
+          this._subPrivateTitles.unsubscribe();
         });
 
         this._isInitialized = true;
@@ -58,33 +60,39 @@ export class InvestmentsService {
     return this.dbFire.object(`investments/${this.userService.getUserId()}/${this.getInvestmentTypeName(type)}/${id}`);
   }
 
-  add(type: InvestmentType, investment: IInvestment) {
-    this.addToAccount(investment.value);
-    return this.getInvestmentsObservable(type).push(investment);
+  add(investment: IInvestment) {
+    return this.getInvestmentsObservable(investment.type).push(investment);
   }
-  update(type: InvestmentType, investment: any) {
-    return this.getInvestmentsObservable(type).update(investment.$key, investment);
+  update(investment: IInvestment) {
+    return this.getInvestmentsObservable(investment.type).update(investment.$key, investment);
   }
-  remove(type: InvestmentType, investment: any) {
-    this.addToAccount(-investment.value);
-    return this.getInvestmentsObservable(type).remove(investment.$key);
+  remove(investment: IInvestment) {
+    return this.getInvestmentsObservable(investment.type).remove(investment.$key);
+  }
+
+  private getPatrimony(): number {
+    var patrimony: number = this.sumInvestments(this.savings.getValue());
+    patrimony += this.sumInvestments(this.privateTitles.getValue());
+    return patrimony; 
+  }
+  private sumInvestments(investments: IInvestment[]): number {
+    if (!investments) return 0;
+    var sum = 0;
+    for (let i = 0; i < investments.length; i++)
+      sum += investments[i].value;
+    return sum;
   }
 
   private getInvestmentsObservable(type: InvestmentType): FirebaseListObservable<any> {
     switch (type) {
       case InvestmentType.Savings:
-        return this.afSavings;
+        return this._afSavings;
       case InvestmentType.PrivateTitle:
-        return this.afPrivateTitles;
+        return this._afPrivateTitles;
     }
   }
 
   private getInvestmentTypeName(type: InvestmentType): string {
     return InvestmentType[type];
-  }
-
-  private addToAccount(value: number) {
-    this._account.patrimony += value;
-    return this.afAccount.set(this._account);
   }
 }

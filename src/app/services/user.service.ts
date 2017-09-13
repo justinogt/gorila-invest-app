@@ -29,7 +29,8 @@ export class UserService {
         this._wasUserLogged = true;
         if (!this.afUser) this.afUser = dbFire.object('users/' + auth.uid);
 
-        //router.navigateByUrl(this._MEMBER_AREA);
+        if (router.url === '/login')
+          router.navigateByUrl(this._MEMBER_AREA);
       }
     });
   }

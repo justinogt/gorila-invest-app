@@ -1,13 +1,14 @@
 <div class="widget">
   <header>
-    <h4 class="text-center">Distribuição do Patrimônio</h4>
+    <h5 class="text-center">Distribuição do Patrimônio</h5>
   </header>
   <hr class="w-75">
   <main class="content">
-      <canvas baseChart height="80"
+      <canvas baseChart height="100"
               [data]="chartData"
               [labels]="chartLabels"
               [options]="chartOptions"
+              [colors]="chartColor"
               [chartType]="chartType"></canvas>
   </main>
 </div>

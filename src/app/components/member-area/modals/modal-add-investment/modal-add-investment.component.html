@@ -4,37 +4,37 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
+<div class="modal-body p-4">
   <form #investmentForm="ngForm" (ngSubmit)="addInvestment()" class="form-horizontal">
     <div class="form-group row">
-      <label class="col-form-label col-4" for="investmentDate">Data:</label>
-      <div class="col-8">
+      <label class="col-form-label col-3" for="investmentDate">Data:</label>
+      <div class="col-9">
         <input disabled [(ngModel)]="investment.investmentDate" class="form-control" type="text" name="investmentDate" value="">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-4" for="bank">Banco:</label>
-      <div class="col-8">
-        <input [(ngModel)]="investment.bank" class="form-control" type="text" name="bank" value="">
+      <label class="col-form-label col-3" for="bank">Banco:</label>
+      <div class="col-9">
+        <input required [(ngModel)]="investment.bank" class="form-control" type="text" name="bank" value="">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-4" for="name">Nome:</label>
-      <div class="col-8">
-        <input [(ngModel)]="investment.name" class="form-control" type="text" name="name" value="">
+      <label class="col-form-label col-3" for="name">Nome:</label>
+      <div class="col-9">
+        <input required [(ngModel)]="investment.name" class="form-control" type="text" name="name" value="">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-4" for="value">Valor:</label>
-      <div class="col-8">
-        <input [(ngModel)]="investment.value" class="form-control" type="number" name="value" value="">
+      <label class="col-form-label col-3" for="value">Valor:</label>
+      <div class="col-9">
+        <input required [(ngModel)]="investment.value" class="form-control" type="number" name="value" value="">
       </div>
     </div>
     <!-- Begin PrivateTitle -->
     <div *ngIf="type === InvestmentType.PrivateTitle" class="form-group row">
-      <label class="col-form-label col-4" for="investmentReturn">Retorno:</label>
-      <div class="col-8">
-        <input [(ngModel)]="investment.investmentReturn" class="form-control" type="number" name="investmentReturn" value="">
+      <label class="col-form-label col-3" for="investmentReturn">Retorno:</label>
+      <div class="col-9">
+        <input required [(ngModel)]="investment.investmentReturn" class="form-control" type="number" name="investmentReturn" value="">
       </div>
     </div>
   </form>

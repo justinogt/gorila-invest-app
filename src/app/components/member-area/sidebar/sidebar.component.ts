@@ -14,7 +14,6 @@ export class SidebarComponent {
   photoUrl: string;
 
   links: SidebarLink[] = [
-    new SidebarLink("Dashboard", "/member-area/dashboard"),
     new SidebarLink("Investimentos", "/member-area/investimentos")
   ];
 

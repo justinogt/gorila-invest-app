@@ -1,0 +1,22 @@
+main canvas {
+
+}
+
+@media(min-width:576px) {
+
+}
+@media(min-width:768px) {
+  main canvas {
+    margin-left: -45px;
+  }
+}
+@media(min-width:992px) {
+  main canvas {
+    margin-left: 0;
+  }
+}
+@media(min-width:1200px) {
+  main canvas {
+    margin-left: -45px;
+  }
+}

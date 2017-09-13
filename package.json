@@ -27,6 +27,7 @@
     "firebase": "^4.3.1",
     "font-awesome": "^4.7.0",
     "ng2-charts": "^1.6.0",
+    "ng2-toastr": "^4.1.2",
     "ngx-bootstrap": "^1.9.3",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"

@@ -8,8 +8,7 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets",
-        "favicon.ico"
+        "assets"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,9 +18,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
-        "styles.css",
-        "gorila.invest.style.css"
+        "styles.css"
       ],
       "scripts": [
         "../node_modules/chart.js/dist/Chart.min.js"

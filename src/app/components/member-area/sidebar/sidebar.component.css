@@ -22,11 +22,19 @@
   font-weight: bold;
 }
 
-  .list li a {
+  .list li a,
+  .list li a:focus {
     display: block;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
   }
-  .list li a.active {
+  .list li a.active,
+  .list li a:hover {
     transition: all 0.4s;
-    border-left: 4px solid #a9ea5c;
     background: #293846;
+    color: rgba(200, 200, 200, 0.75);
+  }
+
+  .list li a.active {
+    border-left: 4px solid #a9ea5c;
   }
